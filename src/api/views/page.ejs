@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title> <%- title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/ckeditor.css" />
+</head>
+
+<body>
+    <style>
+        @charset "UTF-8";
+        @import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+        body {
+            background: #fff;
+            color: #000;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 28px;
+            margin: 0
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        li,
+        p {
+            margin: 0 0 16px
+        }
+
+        h1 {
+            font-size: 40px;
+            line-height: 60px
+        }
+
+        h1,
+        h2 {
+            font-weight: 700
+        }
+
+        h2 {
+            font-size: 32px;
+            line-height: 48px
+        }
+
+        h3 {
+            font-size: 24px;
+            line-height: 36px
+        }
+
+        h3,
+        h4 {
+            font-weight: 700
+        }
+
+        h4 {
+            font-size: 20px;
+            line-height: 30px
+        }
+
+        h5,
+        h6 {
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 700
+        }
+
+        a {
+            text-decoration: none;
+            cursor: pointer;
+            color: #000
+        }
+
+        a:hover,
+        a[rel~=nofollow] {
+            text-decoration: underline
+        }
+
+        a[rel~=nofollow] {
+            color: #553df4
+        }
+
+        a[rel~=nofollow]:hover {
+            text-decoration: none
+        }
+
+        .visible {
+            display: block
+        }
+
+        .hidden {
+            display: none
+        }
+
+        .page {
+            width: 100%
+        }
+
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 1024px;
+            margin: 0 auto;
+            overflow: hidden;
+
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* .container p img{
+            width: 100%;
+        } */
+        /* img{
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid #E9E9FF;
+        } */
+
+        .header {
+            padding: 16px 0
+        }
+
+        .header .title {
+            font-size: 40px;
+            line-height: 60px;
+            font-weight: 700;
+            margin: 0
+        }
+
+        .translations-list-container {
+            padding-bottom: 8px;
+            margin: 0 0 16px
+        }
+
+        .translations-list-container .translations-list {
+            margin: 0;
+            padding: 0;
+            list-style: none
+        }
+
+        .translations-list-container .translations-list .translations-list-item {
+            display: inline-block;
+            padding: 0;
+            margin: 0 8px 8px 0;
+            font-weight: 700;
+            color: #553df4
+        }
+
+        .translations-list-container .translations-list .translations-list-item a {
+            display: inline-block;
+            color: #553df4;
+            border: 1px solid #553df4;
+            border-radius: 32px;
+            padding: 4px 16px
+        }
+
+        .translations-content-container {
+            /* padding-top: 16px; */
+            border-top: 1px solid #eee
+        }
+
+        .footer {
+            border-top: 1px solid #eee;
+            margin: 32px 0 0;
+            padding: 16px 0
+        }
+
+        .css-kdq231 p strong {
+
+            color: #1C2A86;
+            font-weight: 700;
+            font-size: 20px;
+
+        }
+
+
+        .markdown {
+            /* padding-left: 24px;
+  padding-right: 93px;
+  max-width: 1200px; */
+            margin: auto;
+        }
+
+        .markdown h1 {
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.25;
+            font-size: 4rem;
+            font-family: "Public Sans,sans-serif;";
+        }
+
+        .markdown h2 {
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.3333333333;
+            font-size: 3rem;
+            font-family: "Public Sans,sans-serif";
+        }
+
+        .markdown h3 {
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.5;
+            font-size: 2rem;
+            font-family: "Public Sans,sans-serif";
+        }
+
+        .markdown h4 {
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.5;
+            font-size: 1.5rem;
+            font-family: "Public Sans,sans-serif";
+        }
+
+        .markdown h5 {
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.5;
+            font-size: 1.25rem;
+            font-family: "Public Sans,sans-serif";
+        }
+
+        .markdown h6 {
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.5;
+            font-size: 1.125rem;
+            font-family: "Public Sans,sans-serif";
+        }
+
+        .markdown span {
+            font-size: 16px !important;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .markdown p {
+            font-size: 16px !important;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .markdown ul,
+        .markdown ol {
+            font-family: "Public Sans, sans-serif";
+            font-size: 1rem;
+            font-weight: 400;
+            padding-left: 40px;
+        }
+
+        .markdown ul li,
+        .markdown ol li {
+            line-height: 2;
+        }
+
+        .markdown blockquote {
+            line-height: 1.5;
+            font-size: 1.5em;
+            margin: 40px auto;
+            position: relative;
+            font-family: Georgia, serif;
+            padding: 24px 24px 24px 64px;
+            border-radius: 16px;
+            background-color: #f4f6f8;
+            color: #637381 !important;
+        }
+
+        @media (min-width: 900px) {
+            .markdown blockquote {
+                width: 80%;
+            }
+        }
+
+        .markdown blockquote p,
+        .markdown blockquote span {
+            margin-bottom: "0 !important";
+            font-size: "inherit !important";
+            font-family: "Georgia, serif !important";
+            color: #637381 !important;
+        }
+
+        .markdown blockquote:before {
+            left: 16px;
+            top: -8px;
+            display: block;
+            font-size: 3em;
+            content: "“";
+            position: absolute;
+            color: #919eab;
+        }
+
+        .markdown pre,
+        .markdown pre>code {
+            font-size: 16px;
+            overflow-x: auto;
+            white-space: pre;
+            padding: 16px;
+            color: #fff;
+            border-radius: 8px;
+            background-color: #161c24;
+        }
+
+        .markdown code {
+            font-size: 14px;
+            border-radius: 4px;
+            white-space: pre;
+            padding: 1.6px 4px;
+            color: #7a4f01;
+            background-color: #fff7cd;
+        }
+
+        /* ckeditor-custom-styles.css */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        body {
+            background: #fff;
+            color: #000;
+            font-family: 'Public Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 28px;
+            margin: 0;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 1024px;
+            margin: 0 auto;
+            overflow: hidden;
+
+        }
+
+        /* Other existing styles remain unchanged */
+
+        /* Responsive styles */
+        @media only screen and (max-width: 768px) {
+            .container {
+                width: 100%;
+                margin-top: 120px;
+            }
+
+            .header .title {
+                font-size: 24px;
+            }
+
+            /* Add more responsive styles as needed */
+        }
+
+        /* Add the following rule to make images responsive */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Add the following rule for responsive tables */
+        @media screen and (max-width: 600px) {
+
+            th,
+            td {
+                /* display: block; */
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            th {
+                text-align: left;
+            }
+        }
+
+
+
+        p a {
+            word-break: break-all;
+        }
+
+        .tab-content {
+            padding: 10px;
+        }
+
+        th,
+        ul,
+        li,
+        p {
+            margin: 0
+        }
+
+        .markdown {
+            figure {
+                margin: 0;
+                overflow: auto;
+                overflow: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        .table{
+            overflow: scroll;
+                -webkit-overflow-scrolling: touch;
+        }
+
+        .heading {
+            background: #FFF6F6;
+            display: inline-flex;
+            padding: 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            position: fixed;
+            z-index: 999;
+            width: 100%;
+        }
+
+        .title {
+            color: var(--Primary-Blu, #1C2A86);
+            font-family: Figtree;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 140%;
+            width: 95%;
+
+        }
+
+        .subheading {
+            color: var(--Primary-Red, #CA2823);
+            font-family: Figtree;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 140%;
+            /* 22.4px */
+        }
+    </style>
+
+    <div class="page">
+        <div class="translations-content-container">
+            <div class="heading">
+                <div class="title">
+                    <%- title %>
+                </div>
+
+                <div class="subheading">
+                    <%- description %>
+                </div>
+
+            </div>
+            <div class="container">
+                <div class="tab-content translations-content-item en visible" id="en">
+                    <div class="markdown">
+                        <%- content %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+
+</html>

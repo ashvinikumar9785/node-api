@@ -1,0 +1,1568 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "description": "WSES Api",
+    "version": "1.0.0",
+    "title": "WSES API"
+  },
+  "servers": [
+    {
+      "url": "http://192.168.0.120:5003/",
+      "description": "Development server"
+    },
+    {
+      "url": "https://mymeetingdesk.com:7410/",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    { "name": "Api", "description": "Api Routes" },
+    { "name": "Enquiry", "description": "Enquiry Routes" },
+    { "name": "Antibiotics", "description": "Antibiotics Routes" },
+    { "name": "Classification", "description": "Classification Routes" },
+    { "name": "Decision", "description": "Decision Routes" },
+    { "name": "Guidlines", "description": "Guidlines Routes" },
+    { "name": "Overview", "description": "Overview Routes" },
+    { "name": "Video", "description": "Video Routes" }
+  ],
+  "paths": {
+    "/api/get-home-items": {
+      "get": {
+        "summary": "Get Home items",
+        "tags": ["Api"],
+        "operationId": "getHomeItems",
+        "description": "Get Home items",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Home Items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "$ref": "#/components/schemas/User"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+
+    "/api/add-enquiry": {
+      "post": {
+        "summary": "Contact Query",
+        "operationId": "contactQuery",
+        "tags": ["Enquiry"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Any User",
+                "email": "anything@example.com",
+                "message": "Anthing you want to add in note"
+              },
+              "schema": {
+                "type": "object",
+                "required": ["name", "email", "message"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Any User"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "anything@example.com"
+                  },
+                  "message": {
+                    "type": "string",
+                    "description": "Anthing you want to add in note"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User profile and auth token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "$ref": "#/components/schemas/User"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+    "/api/static-pages/{type}": {
+      "get": {
+        "summary": "Privacy",
+        "tags": ["Api"],
+        "operationId": "Static Pages",
+        "description": "Static Pages",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "path",
+            "name": "type",
+            "description": "terms-condition / privacy-policy / about-us",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Static Pages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "$ref": "#/components/schemas/User"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+
+    "/api/get-video": {
+      "get": {
+        "summary": "Get Videos",
+        "tags": ["Video"],
+        "operationId": "getHomeItems",
+        "description": "Get Home items",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "query",
+            "name": "pagination",
+            "description": "Pagination true/false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Start from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Home Items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "$ref": "#/components/schemas/User"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+
+    "/api/get-guidlines": {
+      "get": {
+        "summary": "Get Guidlines",
+        "tags": ["Guidlines"],
+        "operationId": "getGuidlines",
+
+        "description": "Get Guidlines",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "query",
+            "name": "pagination",
+            "description": "Pagination true/false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Start from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Donation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+
+    "/api/list-guidlines/{guidelineId}": {
+      "get": {
+        "summary": "list of guidlines ",
+        "operationId": "listGuidlines",
+        "tags": ["Guidlines"],
+
+        "description": "list of guidlines",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "path",
+            "name": "guidelineId",
+            "description": "guideline id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagination",
+            "description": "Pagination true/false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Start from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Admin settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+
+    "/api/get-refrences": {
+      "get": {
+        "summary": "Get Refrences",
+        "tags": ["Api"],
+        "operationId": "getRefrences",
+
+        "description": "Get Refrences",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "query",
+            "name": "pagination",
+            "description": "Pagination true/false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Start from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Donation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+    "/api/get-decisions": {
+      "get": {
+        "summary": "Get decisions",
+        "tags": ["Decision"],
+        "operationId": "getDecisions",
+
+        "description": "Get decisions",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "query",
+            "name": "pagination",
+            "description": "Pagination true/false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Start from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Donation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+    "/api/list-decision/{decisionId}": {
+      "get": {
+        "summary": "list of decision",
+        "operationId": "listDecisions",
+        "tags": ["Decision"],
+
+        "description": "list of guidlines",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "path",
+            "name": "decisionId",
+            "description": "decision id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagination",
+            "description": "Pagination true/false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Start from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Admin settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+
+    "/api/get-antibiotic": {
+      "get": {
+        "summary": "Get Antibiotic",
+        "tags": ["Antibiotics"],
+        "operationId": "getAntibiotic",
+
+        "description": "Get antibiotic",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "query",
+            "name": "pagination",
+            "description": "Pagination true/false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Start from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "getantibiotic",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+    "/api/list-antibiotic/{antibioticId}": {
+      "get": {
+        "summary": "list of antibiotic",
+        "operationId": "listAntibiotic",
+        "tags": ["Antibiotics"],
+
+        "description": "list of antibiotic",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "path",
+            "name": "antibioticId",
+            "description": "antibiotic id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagination",
+            "description": "Pagination true/false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Start from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Admin settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+
+    "/api/get-classification": {
+      "get": {
+        "summary": "Get classification",
+        "tags": ["Classification"],
+        "operationId": "getClassification",
+
+        "description": "Get classification",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "query",
+            "name": "pagination",
+            "description": "Pagination true/false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Start from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "getClassification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+
+    "/api/list-classification/{classificationId}": {
+      "get": {
+        "summary": "list of classification",
+        "operationId": "listClassification",
+        "tags": ["Classification"],
+
+        "description": "list of classification",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "path",
+            "name": "classificationId",
+            "description": "classification id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagination",
+            "description": "Pagination true/false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Start from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Admin settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+
+    "/api/detail-page/{pageId}": {
+      "get": {
+        "summary": "Detail of page",
+        "operationId": "detail-page",
+        "tags": ["Api"],
+
+        "description": "Detail of page",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "path",
+            "name": "pageId",
+            "description": "page id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Detail of page",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+    "/api/search": {
+      "get": {
+        "summary": "Search",
+        "operationId": "Search",
+        "tags": ["Api"],
+
+        "description": "Search",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "description": "search query",
+            "allowEmptyValue": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "search",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+    "/api/get-overview": {
+      "get": {
+        "summary": "Get overview",
+        "tags": ["Overview"],
+        "operationId": "getOverview",
+
+        "description": "Get overview",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get overview",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+
+    "/api/get-overview-list": {
+      "get": {
+        "summary": "Get overview List",
+        "tags": ["Overview"],
+        "operationId": "getOverviewList",
+
+        "description": "Get overview list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "query",
+            "name": "overviewId",
+            "description": "overviewId",
+            "allowEmptyValue": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get overview list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+
+    "/api/get-nested-childs/{parentId}": {
+      "get": {
+        "summary": "Nested childs List ",
+        "operationId": "listGuidlines",
+        "tags": ["Api"],
+
+        "description": "list of guidlines",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/headerLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/headerPlatform"
+          },
+          {
+            "$ref": "#/components/parameters/headerVersion"
+          },
+          {
+            "in": "path",
+            "name": "parentId",
+            "description": "parent id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagination",
+            "description": "Pagination true/false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Start from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Nested childs Lis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "parameters": {
+      "headerLanguage": {
+        "name": "Accept-Language",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "default": "en",
+          "enum": ["en"]
+        }
+      },
+      "headerPlatform": {
+        "name": "X-Care-Platform",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "default": "ios",
+          "enum": ["ios", "android"]
+        }
+      },
+      "headerVersion": {
+        "name": "X-Care-Version",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "default": "1.0.0",
+          "pattern": "^[\\d]+\\.[\\d]+\\.[\\d]+$"
+        }
+      },
+      "queryPerPage": {
+        "in": "query",
+        "name": "perPage",
+        "description": "number of records per page",
+        "allowEmptyValue": false,
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "queryPage": {
+        "in": "query",
+        "name": "page",
+        "description": "page number",
+        "allowEmptyValue": false,
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      }
+    },
+    "schemas": {
+      "ApiResponse": {
+        "required": ["success", "message", "meta"],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {},
+          "meta": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string"
+              },
+              "forceUpdate": {
+                "type": "boolean"
+              },
+              "maintenance": {
+                "type": "boolean"
+              },
+              "hasUpdate": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "User": {
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+
+          "phone": {
+            "type": "string"
+          },
+          "formattedPhone": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "deviceToken": {
+            "type": "string"
+          },
+          "pushNotificationAllowed": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "userType": {
+            "type": "string"
+          },
+          "languages": {
+            "type": "array"
+          },
+          "city": {
+            "type": "string"
+          },
+          "addresses": {
+            "type": "array"
+          }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "step": {
+            "type": "number",
+            "enum": [1, 2, 3, 4, 5, 6]
+          },
+          "serviceName": {
+            "type": "string",
+            "description": "Service name"
+          },
+          "serviceCategoryId": {
+            "type": "objectId",
+            "description": "Service category id"
+          },
+          "serviceSubCategoryId": {
+            "type": "objectId",
+            "description": "Service sub category id"
+          },
+          "serviceId": {
+            "type": "objectId",
+            "description": "Service id"
+          },
+          "eventTypeIds": {
+            "type": "array",
+            "description": "Event types"
+          },
+          "tags": {
+            "type": "array",
+            "description": "Tags for searchingx"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description"
+          },
+          "location": {
+            "type": "object",
+            "description": "2dsphere location"
+          },
+          "address": {
+            "type": "string",
+            "description": "Service address"
+          },
+          "serviceRadius": {
+            "type": "number",
+            "description": "Radius for service availability"
+          },
+          "isFoodCategory": {
+            "type": "boolean",
+            "description": "Is this service category is food"
+          },
+          "cost": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "itemName": {
+                      "type": "string",
+                      "description": "item name"
+                    },
+                    "itemRate": {
+                      "type": "number",
+                      "description": "item rate"
+                    }
+                  }
+                }
+              },
+              "chargingMode": {
+                "type": "string",
+                "enum": ["PER_HOUR", "PER_TICKET"]
+              },
+              "minQty": {
+                "type": "number",
+                "description": "minimum quantity"
+              },
+              "maxQty": {
+                "type": "number",
+                "description": "maximum quantity"
+              },
+              "travelCost": {
+                "type": "number",
+                "description": "travel cost"
+              },
+              "serviceRate": {
+                "type": "number",
+                "description": "service rate"
+              },
+              "initialDeposit": {
+                "type": "number",
+                "description": "initial deposit percentage"
+              },
+              "cancellationMode": {
+                "type": "string",
+                "enum": ["STRICT", "MODERATE"]
+              }
+            }
+          },
+          "faq": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "question": {
+                  "type": "string"
+                },
+                "answer": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "FAQ related to service"
+          },
+          "images": {
+            "type": "array",
+            "description": "Service images"
+          },
+          "availability": {
+            "type": "array",
+            "description": "Availability according to weekdays",
+            "items": {
+              "type": "object",
+              "properties": {
+                "weekday": {
+                  "type": "string",
+                  "enum": [0, 1, 2, 3, 4, 5, 6]
+                },
+                "isAvailable": {
+                  "type": "boolean"
+                },
+                "from": {
+                  "type": "string",
+                  "description": "available from time",
+                  "example": "10:00"
+                },
+                "to": {
+                  "type": "string",
+                  "description": "available to time",
+                  "example": "18:00"
+                }
+              }
+            }
+          },
+          "availabilityTimeZoneOffset": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    },
+    "responses": {
+      "BadRequestError": {
+        "description": "Request fails validation or doesn't meet all conditions for request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "example": {
+                "success": false,
+                "message": "Validation failed",
+                "data": ""
+              },
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "Requested resource was not found"
+      },
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid"
+      }
+    }
+  }
+}

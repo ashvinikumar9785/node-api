@@ -1,0 +1,21 @@
+{
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module"
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "indent": "off",
+    "no-else-return": 1,
+    "semi": [1, "always"],
+    "quotes": ["error", "single"],
+    "quote-props": [1, "as-needed"],
+    "no-var": 1,
+    "object-shorthand": [1, "always"],
+    "space-unary-ops": 2
+  }
+}
